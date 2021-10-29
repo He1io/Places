@@ -7,5 +7,20 @@
     <fragment
         android:id="@+id/placesListFragment"
         android:name="com.he1io.places.PlacesListFragment"
-        android:label="PlacesListFragment" />
+        android:label="PlacesListFragment" >
+        <action
+            android:id="@+id/action_placesListFragment_to_placeDetailsFragment"
+            app:destination="@id/placeDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/placeDetailsFragment"
+        android:name="com.he1io.places.PlaceDetailsFragment"
+        android:label="PlaceDetailsFragment" >
+        <action
+            android:id="@+id/action_placeDetailsFragment_to_placesListFragment"
+            app:destination="@id/placesListFragment" />
+        <argument
+            android:name="place_id"
+            app:argType="string" />
+    </fragment>
 </navigation>

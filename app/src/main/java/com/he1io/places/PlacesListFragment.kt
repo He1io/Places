@@ -8,16 +8,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.he1io.places.databinding.FragmentPlacesListBinding
 import kotlinx.coroutines.launch
 
-private const val foursquareClientId = "GHDKFXUZUQPHIIWUSXOPSWM2XN4IYTS3BBLIEFKXZMBB50DC"
-private const val foursquareClientSecret = "LKCSPMOFFT2UBE3JVYJ3IFFRYMATAXFCLSUFYFCDRLQTSHNJ"
-
 class PlacesListFragment : Fragment() {
 
-    private val viewModel: PlacesViewModel by viewModels()
+    private val viewModel: PlaceViewModel by viewModels()
 
     private var _binding: FragmentPlacesListBinding? = null
     private val binding get() = _binding!!
@@ -39,22 +37,9 @@ class PlacesListFragment : Fragment() {
 
         adapter = PlacesListAdapter(listOf())
         { currentPlace: Place ->
-            Toast.makeText(
-                context,
-                "You have selected ${currentPlace.name}",
-                Toast.LENGTH_SHORT
-            ).show()
+            val action = PlacesListFragmentDirections.actionPlacesListFragmentToPlaceDetailsFragment(currentPlace.id)
+            this.findNavController().navigate(action)
         }
-        /*
-        {currentPlace:Place ->
-            val action =
-                    PlacesListFragmentDirections.actionPlacesListFragmentToPlacesDetailFragment(currentPlace.id)
-                this.findNavController().navigate(action)
-
-        }*/
-
-
-
 
         binding.apply {
             recyclerView.adapter = adapter
@@ -64,8 +49,6 @@ class PlacesListFragment : Fragment() {
                 viewModel.viewModelScope.launch {
                     try {
                         val placesList = viewModel.getNearPlaces(
-                            foursquareClientId,
-                            foursquareClientSecret,
                             searchText.text.toString()
                         )
                         adapter.setPlacesList(placesList)

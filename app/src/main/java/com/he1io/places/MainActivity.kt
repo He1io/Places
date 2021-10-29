@@ -6,6 +6,11 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 
+/**
+ * TODO:    · Show the details in the first fragment RecyclerView
+ *          ·
+ */
+
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private lateinit var navController: NavController
 

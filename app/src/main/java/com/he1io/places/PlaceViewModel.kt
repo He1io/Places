@@ -2,18 +2,23 @@ package com.he1io.places
 
 import androidx.lifecycle.ViewModel
 
-class PlacesViewModel : ViewModel() {
+class PlaceViewModel : ViewModel() {
 
     suspend fun getNearPlaces(
-        clientId: String,
-        clientSecret: String,
         location: String
     ): List<Place> {
 
         return FoursquareApi.retrofitService.getNearPlaces(
-            clientId,
-            clientSecret,
             location
         ).response.venues
+    }
+
+    suspend fun getPlaceById(
+        placeId: String
+    ): PlaceDetails {
+
+        return FoursquareApi.retrofitService.getPlaceById(
+            placeId
+        ).response.venue
     }
 }
