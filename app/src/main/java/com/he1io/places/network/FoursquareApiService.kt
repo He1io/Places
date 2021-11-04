@@ -1,4 +1,4 @@
-package com.he1io.places
+package com.he1io.places.network
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -25,21 +25,22 @@ interface FoursquareApiService {
     @GET("venues/search")
     suspend fun getNearPlaces(
         @Query("near") near: String,
+        @Query("v") v: String, // ("yyyymmdd")
         @Query("client_id") clientId: String = foursquareClientId,
         @Query("client_secret") clientSecret: String = foursquareClientSecret,
-        @Query("v") v: String = "20211027"
+        @Query("limit") limit: String = "2"
     ): SearchResponse
 
     @GET("venues/{venue_id}")
     suspend fun getPlaceById(
         @Path("venue_id") venueId: String,
+        @Query("v") v: String, // ("yyyymmdd")
         @Query("client_id") clientId: String = foursquareClientId,
-        @Query("client_secret") clientSecret: String = foursquareClientSecret,
-        @Query("v") v: String = "20211027"
+        @Query("client_secret") clientSecret: String = foursquareClientSecret
     ): DetailsResponse
 }
 
-// Singleton Object - there will only be one instance of this object, saving and optimizing resources
+// Singleton Object - there will only be one instance of this object
 object FoursquareApi {
     val retrofitService: FoursquareApiService by lazy {
         retrofit.create(FoursquareApiService::class.java)

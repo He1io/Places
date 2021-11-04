@@ -7,8 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 
 /**
- * TODO:    · Show the details in the first fragment RecyclerView
- *          ·
+ * TODO:    · Ask for permissions (location) when needed
  */
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {

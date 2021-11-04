@@ -1,9 +1,11 @@
-package com.he1io.places
+package com.he1io.places.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.he1io.places.databinding.ItemPlacesListBinding
+import com.he1io.places.model.Place
 
 class PlacesListAdapter(
     private var placesList: List<Place>,
@@ -37,6 +39,17 @@ class PlacesListAdapter(
         fun bind(place: Place) {
             binding.apply {
                 placeName.text = place.name
+                for(category in place.categories){
+                    if (category.primary){
+                        placeCategory.text = category.name
+                        category.icon.let {
+                            placeIcon.load("${it.prefix}64${(it.suffix)}")
+                        }
+                    }
+                }
+                val distanceText = "Distance from here: ${place.location.distance}"
+                placeDistance.text = distanceText
+                placeHereNow.text = place.hereNow.summary
             }
         }
     }

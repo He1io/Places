@@ -67,6 +67,8 @@ dependencies {
     implementation 'com.squareup.moshi:moshi-kotlin:1.9.3'
     // Coil: Download images
     implementation "io.coil-kt:coil:1.2.2"
+    // Maps
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
 
     implementation 'androidx.multidex:multidex:2.0.1'
 }

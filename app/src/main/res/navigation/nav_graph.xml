@@ -6,7 +6,7 @@
     app:startDestination="@id/placesListFragment">
     <fragment
         android:id="@+id/placesListFragment"
-        android:name="com.he1io.places.PlacesListFragment"
+        android:name="com.he1io.places.fragment.PlacesListFragment"
         android:label="PlacesListFragment" >
         <action
             android:id="@+id/action_placesListFragment_to_placeDetailsFragment"
@@ -14,13 +14,13 @@
     </fragment>
     <fragment
         android:id="@+id/placeDetailsFragment"
-        android:name="com.he1io.places.PlaceDetailsFragment"
+        android:name="com.he1io.places.fragment.PlaceDetailsFragment"
         android:label="PlaceDetailsFragment" >
         <action
             android:id="@+id/action_placeDetailsFragment_to_placesListFragment"
             app:destination="@id/placesListFragment" />
         <argument
-            android:name="place_id"
+            android:name="place_location"
             app:argType="string" />
     </fragment>
 </navigation>

@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Places</string>
     <string name="search_button_text">Search</string>
+    <!-- Maps Api -->
+    <string name="maps_api_key">YOUR_MAPS_API_KEY</string>
 </resources>

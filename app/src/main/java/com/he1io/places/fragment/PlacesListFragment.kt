@@ -1,4 +1,4 @@
-package com.he1io.places
+package com.he1io.places.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.he1io.places.adapter.PlacesListAdapter
 import com.he1io.places.databinding.FragmentPlacesListBinding
+import com.he1io.places.model.Place
+import com.he1io.places.viewmodel.PlaceViewModel
 import kotlinx.coroutines.launch
 
 class PlacesListFragment : Fragment() {
@@ -36,8 +39,13 @@ class PlacesListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = PlacesListAdapter(listOf())
+        // onItemClicked
         { currentPlace: Place ->
-            val action = PlacesListFragmentDirections.actionPlacesListFragmentToPlaceDetailsFragment(currentPlace.id)
+            val locationString = "${currentPlace.location.lat},${currentPlace.location.lng}"
+            val action =
+                PlacesListFragmentDirections.actionPlacesListFragmentToPlaceDetailsFragment(
+                    locationString
+                )
             this.findNavController().navigate(action)
         }
 
@@ -45,7 +53,6 @@ class PlacesListFragment : Fragment() {
             recyclerView.adapter = adapter
             recyclerView.layoutManager = LinearLayoutManager(context)
             searchButton.setOnClickListener {
-
                 viewModel.viewModelScope.launch {
                     try {
                         val placesList = viewModel.getNearPlaces(
@@ -56,7 +63,7 @@ class PlacesListFragment : Fragment() {
                     } catch (e: Exception) {
                         Toast.makeText(
                             context,
-                            "Oops! No places found at that location",
+                            "Oops! Something went wrong",
                             Toast.LENGTH_LONG
                         ).show()
                     }
