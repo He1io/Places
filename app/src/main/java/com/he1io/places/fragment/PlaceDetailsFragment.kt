@@ -20,6 +20,8 @@ private const val size = "2400x2400"
 
 class PlaceDetailsFragment : Fragment() {
 
+    private val mapsApiKey = getString(R.string.maps_api_key)
+
     private val viewModel: PlaceViewModel by viewModels()
 
     private var _binding: FragmentPlaceDetailsBinding? = null
@@ -44,22 +46,27 @@ class PlaceDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         placeId = navigationArgs.placeId
-        val mapsApiKey = getString(R.string.maps_api_key)
-
 
         viewModel.viewModelScope.launch {
             place = viewModel.getPlaceById(placeId)
-            val placeLocationString = "${place.location.lat},${place.location.lng}"
+
             binding.apply {
+                // Place Location Map
+                val placeLocationString = "${place.location.lat},${place.location.lng}"
                 map.load("https://maps.googleapis.com/maps/api/staticmap?markers=color:red%7C$placeLocationString&size=$size&key=$mapsApiKey")
+                // Place Details
                 placeName.text = place.name
                 for(category in place.categories){
                     if (category.primary){
                         placeCategory.text = category.name
-                        category.icon.let {
-                            placeIcon.load("${it.prefix}64${(it.suffix)}")
-                        }
+                        placeIcon.load("${category.icon.prefix}64${(category.icon.suffix)}")
                     }
+                }
+                val ratingText = if (place.rating.isNotBlank()) "${place.rating}/10" else ""
+                placeRating.text = ratingText
+                place.hours.timeframes[0].let {
+                    val hoursOpenText = if (it.days.isNotBlank()) "${it.days} (${it.open[0].renderedTime})" else ""
+                    placeHoursOpen.text = hoursOpenText
                 }
                 val distanceText = "Distance from here: ${place.location.distance}"
                 placeDistance.text = distanceText
