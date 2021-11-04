@@ -16,7 +16,6 @@ import com.he1io.places.viewmodel.PlaceViewModel
 import kotlinx.coroutines.launch
 
 // Constants to Maps Api requests
-private const val zoom = 15
 private const val size = "2400x2400"
 
 class PlaceDetailsFragment : Fragment() {
@@ -44,15 +43,28 @@ class PlaceDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //placeId = navigationArgs.placeId
-        val placeLocation = navigationArgs.placeLocation
+        placeId = navigationArgs.placeId
         val mapsApiKey = getString(R.string.maps_api_key)
 
 
         viewModel.viewModelScope.launch {
-            //place = viewModel.getPlaceById(placeId)
+            place = viewModel.getPlaceById(placeId)
+            val placeLocationString = "${place.location.lat},${place.location.lng}"
             binding.apply {
-                map.load("https://maps.googleapis.com/maps/api/staticmap?center=$placeLocation&zoom=$zoom&size=$size&key=$mapsApiKey")
+                map.load("https://maps.googleapis.com/maps/api/staticmap?markers=color:red%7C$placeLocationString&size=$size&key=$mapsApiKey")
+                placeName.text = place.name
+                for(category in place.categories){
+                    if (category.primary){
+                        placeCategory.text = category.name
+                        category.icon.let {
+                            placeIcon.load("${it.prefix}64${(it.suffix)}")
+                        }
+                    }
+                }
+                val distanceText = "Distance from here: ${place.location.distance}"
+                placeDistance.text = distanceText
+                placeHereNow.text = place.hereNow.summary
+                placeDescripcion.text = place.description
             }
         }
     }

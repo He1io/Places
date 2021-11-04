@@ -41,10 +41,9 @@ class PlacesListFragment : Fragment() {
         adapter = PlacesListAdapter(listOf())
         // onItemClicked
         { currentPlace: Place ->
-            val locationString = "${currentPlace.location.lat},${currentPlace.location.lng}"
             val action =
                 PlacesListFragmentDirections.actionPlacesListFragmentToPlaceDetailsFragment(
-                    locationString
+                    currentPlace.id
                 )
             this.findNavController().navigate(action)
         }
