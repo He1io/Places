@@ -20,8 +20,6 @@ private const val size = "2400x2400"
 
 class PlaceDetailsFragment : Fragment() {
 
-    private val mapsApiKey = getString(R.string.maps_api_key)
-
     private val viewModel: PlaceViewModel by viewModels()
 
     private var _binding: FragmentPlaceDetailsBinding? = null
@@ -52,6 +50,7 @@ class PlaceDetailsFragment : Fragment() {
 
             binding.apply {
                 // Place Location Map
+                val mapsApiKey = getString(R.string.maps_api_key)
                 val placeLocationString = "${place.location.lat},${place.location.lng}"
                 map.load("https://maps.googleapis.com/maps/api/staticmap?markers=color:red%7C$placeLocationString&size=$size&key=$mapsApiKey")
                 // Place Details

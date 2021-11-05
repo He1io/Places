@@ -25,16 +25,17 @@ interface FoursquareApiService {
     @GET("venues/search")
     suspend fun getNearPlaces(
         @Query("near") near: String,
-        @Query("v") v: String, // ("yyyymmdd")
+        @Query("v") v: String,
         @Query("client_id") clientId: String = foursquareClientId,
         @Query("client_secret") clientSecret: String = foursquareClientSecret,
+        // I'm limiting this API request because it's Premium (50 requests/day)
         @Query("limit") limit: String = "2"
     ): SearchResponse
 
     @GET("venues/{venue_id}")
     suspend fun getPlaceById(
         @Path("venue_id") venueId: String,
-        @Query("v") v: String, // ("yyyymmdd")
+        @Query("v") v: String,
         @Query("client_id") clientId: String = foursquareClientId,
         @Query("client_secret") clientSecret: String = foursquareClientSecret
     ): DetailsResponse

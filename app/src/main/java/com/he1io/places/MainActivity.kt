@@ -7,7 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 
 /**
- * TODO:    · Ask for permissions (location) when needed
+ * TODO:    · Calculate the distance between current location and the place location (Location.distanceTo())
  */
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
